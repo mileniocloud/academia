@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_RoomLayout.cshtml";
+}
+<div style="height: 100%" class="col-md-12">
+    <div style="height: 100%" class="row">
+        <div id="col12" class="col-md-12 chat-container">
+            <div style="height: 100%" class="row">
+                <div style="height: 98%" class="col-md-9">
+
+                    <iframe class="iframe" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1"></iframe>
+                </div>
+                <div style="height: 90%" class="col-md-3">
+                    <div style="height: 100%" class="chat-panel panel panel-default">
+                        <div class="panel-heading">
+                            Chat
+                            <i class="fa fa-paper-plane fa-fw"></i>
+                        </div>
+                        <div style="height: 95%" class="messaging panel-body" id="chat">
+                            <input type="hidden" id="messajearea" />
+                            <br />
+                        </div>
+                        <div class="panel-footer">
+                            @*<input type="hidden" id="displayname" />*@
+                            @*<input type="hidden" id="room" />*@
+                            @Html.Hidden("room", (object)ViewBag.room)
+                            @Html.Hidden("displayname", (object)ViewBag.displayname)
+                            <div id="divtext" class="input-group">
+                                <input id="message" type="text" name="message" style="float:left" class="form-control input-sm" placeholder="Escriba su mensaje aqui..." />
+                                <span style="margin-left:2px" class="input-group-btn">
+                                    <input type="button" style="margin-left:5%" class="btn btn-warning btn-sm" id="sendmessage" value="Enviar">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/signalr/hubs")
+@Scripts.Render("~/Scripts/Chat.js")

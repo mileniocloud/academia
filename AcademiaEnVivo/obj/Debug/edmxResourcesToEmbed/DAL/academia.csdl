@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="academiaenvivoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="academiaenvivoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CategoriaCurso" EntityType="academiaenvivoModel.CategoriaCurso" />
+    <EntitySet Name="Invitado" EntityType="academiaenvivoModel.Invitado" />
+    <EntitySet Name="Evento" EntityType="academiaenvivoModel.Evento" />
+    <AssociationSet Name="FK_Evento_CategoriaCurso" Association="academiaenvivoModel.FK_Evento_CategoriaCurso">
+      <End Role="CategoriaCurso" EntitySet="CategoriaCurso" />
+      <End Role="Evento" EntitySet="Evento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invitado_Evento" Association="academiaenvivoModel.FK_invitado_Evento">
+      <End Role="Evento" EntitySet="Evento" />
+      <End Role="Invitado" EntitySet="Invitado" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CategoriaCurso">
+    <Key>
+      <PropertyRef Name="id_categoria" />
+    </Key>
+    <Property Name="id_categoria" Type="Guid" Nullable="false" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Evento" Relationship="academiaenvivoModel.FK_Evento_CategoriaCurso" FromRole="CategoriaCurso" ToRole="Evento" />
+  </EntityType>
+  <EntityType Name="Invitado">
+    <Key>
+      <PropertyRef Name="id_invitado" />
+    </Key>
+    <Property Name="id_invitado" Type="Guid" Nullable="false" />
+    <Property Name="id_evento" Type="Guid" Nullable="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="asistio" Type="Boolean" Nullable="false" />
+    <Property Name="ip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="codigo_asistencia" Type="Guid" />
+    <NavigationProperty Name="Evento" Relationship="academiaenvivoModel.FK_invitado_Evento" FromRole="Invitado" ToRole="Evento" />
+  </EntityType>
+  <EntityType Name="Evento">
+    <Key>
+      <PropertyRef Name="id_evento" />
+    </Key>
+    <Property Name="id_evento" Type="Guid" Nullable="false" />
+    <Property Name="id_categoria" Type="Guid" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="fecha_evento" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="hora_desde" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="hora_hasta" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="duracion" Type="Int32" Nullable="false" />
+    <Property Name="precio" Type="Double" Nullable="false" />
+    <Property Name="invitados" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <Property Name="fecha_creado" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CategoriaCurso" Relationship="academiaenvivoModel.FK_Evento_CategoriaCurso" FromRole="Evento" ToRole="CategoriaCurso" />
+    <NavigationProperty Name="Invitado" Relationship="academiaenvivoModel.FK_invitado_Evento" FromRole="Evento" ToRole="Invitado" />
+  </EntityType>
+  <Association Name="FK_Evento_CategoriaCurso">
+    <End Type="academiaenvivoModel.CategoriaCurso" Role="CategoriaCurso" Multiplicity="0..1" />
+    <End Type="academiaenvivoModel.Evento" Role="Evento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoriaCurso">
+        <PropertyRef Name="id_categoria" />
+      </Principal>
+      <Dependent Role="Evento">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invitado_Evento">
+    <End Type="academiaenvivoModel.Evento" Role="Evento" Multiplicity="1" />
+    <End Type="academiaenvivoModel.Invitado" Role="Invitado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Evento">
+        <PropertyRef Name="id_evento" />
+      </Principal>
+      <Dependent Role="Invitado">
+        <PropertyRef Name="id_evento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

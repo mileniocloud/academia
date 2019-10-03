@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="academiaenvivoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CategoriaCurso">
+    <Key>
+      <PropertyRef Name="id_categoria" />
+    </Key>
+    <Property Name="id_categoria" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Evento">
+    <Key>
+      <PropertyRef Name="id_evento" />
+    </Key>
+    <Property Name="id_evento" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="id_categoria" Type="uniqueidentifier" />
+    <Property Name="nombre" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="descripcion" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="fecha_evento" Type="datetime" Nullable="false" />
+    <Property Name="hora_desde" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="hora_hasta" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="duracion" Type="int" Nullable="false" />
+    <Property Name="precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="invitados" Type="nvarchar(max)" />
+    <Property Name="estado" Type="bit" Nullable="false" />
+    <Property Name="fecha_creado" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Invitado">
+    <Key>
+      <PropertyRef Name="id_invitado" />
+    </Key>
+    <Property Name="id_invitado" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="id_evento" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="asistio" Type="bit" Nullable="false" />
+    <Property Name="ip" Type="nvarchar" MaxLength="50" />
+    <Property Name="codigo_asistencia" Type="uniqueidentifier" />
+  </EntityType>
+  <Association Name="FK_Evento_CategoriaCurso">
+    <End Role="CategoriaCurso" Type="Self.CategoriaCurso" Multiplicity="0..1" />
+    <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CategoriaCurso">
+        <PropertyRef Name="id_categoria" />
+      </Principal>
+      <Dependent Role="Evento">
+        <PropertyRef Name="id_categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_invitado_Evento">
+    <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+    <End Role="Invitado" Type="Self.Invitado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Evento">
+        <PropertyRef Name="id_evento" />
+      </Principal>
+      <Dependent Role="Invitado">
+        <PropertyRef Name="id_evento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="academiaenvivoModelStoreContainer">
+    <EntitySet Name="CategoriaCurso" EntityType="Self.CategoriaCurso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invitado" EntityType="Self.Invitado" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Evento_CategoriaCurso" Association="Self.FK_Evento_CategoriaCurso">
+      <End Role="CategoriaCurso" EntitySet="CategoriaCurso" />
+      <End Role="Evento" EntitySet="Evento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_invitado_Evento" Association="Self.FK_invitado_Evento">
+      <End Role="Evento" EntitySet="Evento" />
+      <End Role="Invitado" EntitySet="Invitado" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

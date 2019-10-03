@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AcademiaEnVivo.Models.EventoModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           Categoria
+        </th>
+        <th>
+            Curso
+        </th>
+        <th>
+           Descripción
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Hora Inicio
+        </th>
+        <th>
+            Hora Fin
+        </th>
+        <th>
+            Duración
+        </th>
+        <th>
+            Precio
+        </th>        
+        <th>
+            Estado
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre_categoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha_evento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hora_desde)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hora_hasta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duracion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.precio)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.estado_)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.id_evento }) |
+            @Html.ActionLink("Details", "Details", new { id = item.id_evento }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.id_evento })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<AcademiaEnVivo.Models.EventoModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<br />
+
+
+<p>
+    @Html.ActionLink("Nuevo Evento", "Create", null, new { @class = "btn btn-success" })
+</p>
+<div class="col-md-12">
+    <div class="table-light">
+        <div class="table-header">
+            <div class="table-caption">
+                Eventos
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Categoria
+                    </th>
+                    <th>
+                        Curso
+                    </th>
+                    <th>
+                        Descripción
+                    </th>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Hora Inicio
+                    </th>
+                    <th>
+                        Hora Fin
+                    </th>
+                    <th>
+                        Duración
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                    <th>
+                        Editar
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre_categoria)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.descripcion, null, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fecha_evento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.hora_desde)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.hora_hasta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.duracion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.precio_decimal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estado_)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id_evento }, new { @class = "btn btn-success" })
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>        
+    </div>
+</div>
+

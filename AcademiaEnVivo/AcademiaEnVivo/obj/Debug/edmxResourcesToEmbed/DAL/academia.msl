@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="academiaenvivoModelStoreContainer" CdmEntityContainer="academiaenvivoEntities">
+    <EntitySetMapping Name="CategoriaCurso">
+      <EntityTypeMapping TypeName="academiaenvivoModel.CategoriaCurso">
+        <MappingFragment StoreEntitySet="CategoriaCurso">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Evento">
+      <EntityTypeMapping TypeName="academiaenvivoModel.Evento">
+        <MappingFragment StoreEntitySet="Evento">
+          <ScalarProperty Name="fecha_creado" ColumnName="fecha_creado" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="invitados" ColumnName="invitados" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="duracion" ColumnName="duracion" />
+          <ScalarProperty Name="hora_hasta" ColumnName="hora_hasta" />
+          <ScalarProperty Name="hora_desde" ColumnName="hora_desde" />
+          <ScalarProperty Name="fecha_evento" ColumnName="fecha_evento" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+          <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invitado">
+      <EntityTypeMapping TypeName="academiaenvivoModel.Invitado">
+        <MappingFragment StoreEntitySet="Invitado">
+          <ScalarProperty Name="codigo_asistencia" ColumnName="codigo_asistencia" />
+          <ScalarProperty Name="ip" ColumnName="ip" />
+          <ScalarProperty Name="asistio" ColumnName="asistio" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+          <ScalarProperty Name="id_invitado" ColumnName="id_invitado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

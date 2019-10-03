@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/chatcss")
+    
+    @Scripts.Render("~/bundles/chatjs")
+</head>
+<body id="chatbody" class="chatbody">
+    <div id="render" class="renderbody">
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

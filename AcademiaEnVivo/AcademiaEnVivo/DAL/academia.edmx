@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="academiaenvivoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CategoriaCurso">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="id_evento" />
+          </Key>
+          <Property Name="id_evento" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="id_categoria" Type="uniqueidentifier" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="fecha_evento" Type="datetime" Nullable="false" />
+          <Property Name="hora_desde" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="hora_hasta" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="duracion" Type="int" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="invitados" Type="nvarchar(max)" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+          <Property Name="fecha_creado" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Invitado">
+          <Key>
+            <PropertyRef Name="id_invitado" />
+          </Key>
+          <Property Name="id_invitado" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="id_evento" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="asistio" Type="bit" Nullable="false" />
+          <Property Name="ip" Type="nvarchar" MaxLength="50" />
+          <Property Name="codigo_asistencia" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_Evento_CategoriaCurso">
+          <End Role="CategoriaCurso" Type="Self.CategoriaCurso" Multiplicity="0..1" />
+          <End Role="Evento" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriaCurso">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_invitado_Evento">
+          <End Role="Evento" Type="Self.Evento" Multiplicity="1" />
+          <End Role="Invitado" Type="Self.Invitado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="id_evento" />
+            </Principal>
+            <Dependent Role="Invitado">
+              <PropertyRef Name="id_evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="academiaenvivoModelStoreContainer">
+          <EntitySet Name="CategoriaCurso" EntityType="Self.CategoriaCurso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evento" EntityType="Self.Evento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invitado" EntityType="Self.Invitado" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Evento_CategoriaCurso" Association="Self.FK_Evento_CategoriaCurso">
+            <End Role="CategoriaCurso" EntitySet="CategoriaCurso" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_invitado_Evento" Association="Self.FK_invitado_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="Invitado" EntitySet="Invitado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="academiaenvivoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="academiaenvivoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CategoriaCurso" EntityType="academiaenvivoModel.CategoriaCurso" />
+          <EntitySet Name="Evento" EntityType="academiaenvivoModel.Evento" />
+          <AssociationSet Name="FK_Evento_CategoriaCurso" Association="academiaenvivoModel.FK_Evento_CategoriaCurso">
+            <End Role="CategoriaCurso" EntitySet="CategoriaCurso" />
+            <End Role="Evento" EntitySet="Evento" />
+          </AssociationSet>
+          <EntitySet Name="Invitado" EntityType="academiaenvivoModel.Invitado" />
+          <AssociationSet Name="FK_invitado_Evento" Association="academiaenvivoModel.FK_invitado_Evento">
+            <End Role="Evento" EntitySet="Evento" />
+            <End Role="Invitado" EntitySet="Invitado" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CategoriaCurso">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="Guid" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Evento" Relationship="academiaenvivoModel.FK_Evento_CategoriaCurso" FromRole="CategoriaCurso" ToRole="Evento" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="id_evento" />
+          </Key>
+          <Property Name="id_evento" Type="Guid" Nullable="false" />
+          <Property Name="id_categoria" Type="Guid" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_evento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="hora_desde" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="hora_hasta" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="duracion" Type="Int32" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="invitados" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="fecha_creado" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CategoriaCurso" Relationship="academiaenvivoModel.FK_Evento_CategoriaCurso" FromRole="Evento" ToRole="CategoriaCurso" />
+          <NavigationProperty Name="Invitado" Relationship="academiaenvivoModel.FK_invitado_Evento" FromRole="Evento" ToRole="Invitado" />
+        </EntityType>
+        <Association Name="FK_Evento_CategoriaCurso">
+          <End Type="academiaenvivoModel.CategoriaCurso" Role="CategoriaCurso" Multiplicity="0..1" />
+          <End Type="academiaenvivoModel.Evento" Role="Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriaCurso">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="Evento">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Invitado">
+          <Key>
+            <PropertyRef Name="id_invitado" />
+          </Key>
+          <Property Name="id_invitado" Type="Guid" Nullable="false" />
+          <Property Name="id_evento" Type="Guid" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="asistio" Type="Boolean" Nullable="false" />
+          <Property Name="ip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="codigo_asistencia" Type="Guid" />
+          <NavigationProperty Name="Evento" Relationship="academiaenvivoModel.FK_invitado_Evento" FromRole="Invitado" ToRole="Evento" />
+        </EntityType>
+        <Association Name="FK_invitado_Evento">
+          <End Type="academiaenvivoModel.Evento" Role="Evento" Multiplicity="1" />
+          <End Type="academiaenvivoModel.Invitado" Role="Invitado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evento">
+              <PropertyRef Name="id_evento" />
+            </Principal>
+            <Dependent Role="Invitado">
+              <PropertyRef Name="id_evento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="academiaenvivoModelStoreContainer" CdmEntityContainer="academiaenvivoEntities">
+          <EntitySetMapping Name="CategoriaCurso">
+            <EntityTypeMapping TypeName="academiaenvivoModel.CategoriaCurso">
+              <MappingFragment StoreEntitySet="CategoriaCurso">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evento">
+            <EntityTypeMapping TypeName="academiaenvivoModel.Evento">
+              <MappingFragment StoreEntitySet="Evento">
+                <ScalarProperty Name="fecha_creado" ColumnName="fecha_creado" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="invitados" ColumnName="invitados" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="duracion" ColumnName="duracion" />
+                <ScalarProperty Name="hora_hasta" ColumnName="hora_hasta" />
+                <ScalarProperty Name="hora_desde" ColumnName="hora_desde" />
+                <ScalarProperty Name="fecha_evento" ColumnName="fecha_evento" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invitado">
+            <EntityTypeMapping TypeName="academiaenvivoModel.Invitado">
+              <MappingFragment StoreEntitySet="Invitado">
+                <ScalarProperty Name="codigo_asistencia" ColumnName="codigo_asistencia" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="asistio" ColumnName="asistio" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+                <ScalarProperty Name="id_invitado" ColumnName="id_invitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
